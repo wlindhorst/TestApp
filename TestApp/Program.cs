@@ -10,6 +10,10 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter Text:");
+            LineProcessor proc = new LineProcessor();
+            proc.ParseArgs(args);
+
         }
     }
 }
