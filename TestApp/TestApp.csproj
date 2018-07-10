@@ -50,6 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataComboTest.txt" />
     <Content Include="DataDatesTest.txt" />
     <Content Include="DataNumericTest.txt" />
     <Content Include="DataPhoneNumberTest.txt" />

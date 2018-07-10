@@ -10,10 +10,15 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter Text:");
-            LineProcessor proc = new LineProcessor();
-            proc.ParseArgs(args);
-
+            if (args.Count() != 0)
+            {
+                LineProcessor proc = new LineProcessor();
+                proc.ParseArgs(args);
+            }
+            else
+            {
+                Console.WriteLine("One or more arguments required.");
+            }
         }
     }
 }

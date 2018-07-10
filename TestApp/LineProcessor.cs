@@ -6,8 +6,9 @@ namespace TestApp
 {
     class LineProcessor
     {
-        const string DateRegex = @"^\d{1,2}\/\d{1,2}\/\d{4}$"; //@" ^ (?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$";
+        const string DateRegex = @"^\d{1,2}\/\d{1,2}\/\d{4}$"; 
         const string PhoneRegex = @"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+        const string WordRegex = @"\b[^\d\W]+\b";
 
         public LineProcessor()
         {
@@ -39,18 +40,9 @@ namespace TestApp
                 }
                 if (System.Text.RegularExpressions.Regex.IsMatch(arg, PhoneRegex))
                 {
-                    // Remove extra non-numeric items to allow for better sort
-                   // string argTrimed = arg.Replace("(", "").Replace(")", "").Replace("-","").Replace(".", "");
-                    
                     try
                     {
-                        //long r;
-                        //Int64.TryParse(arg.Replace("(", "").Replace(")", "").Replace("-", "").Replace(".", ""), out r);
-                        //long r = Convert.ToInt64(arg.Replace("(", "").Replace(")", "").Replace("-", "").Replace(".", ""));
-                        //if (r != 0)
-                        phoneList.Add(Convert.ToInt64(arg.Replace("(", "").Replace(")", "").Replace("-", "").Replace(".", "")););
-                        //else
-                        //    Console.WriteLine("Error converting expected phone number: " + arg);
+                        phoneList.Add(Convert.ToInt64(arg.Replace("(", "").Replace(")", "").Replace("-", "").Replace(".", "")));
                     }
                     catch (Exception ex)
                     {
@@ -62,20 +54,17 @@ namespace TestApp
                 {
                     try
                     {
-                        //long r = Convert.ToInt64(arg);
-                        //if (r != 0)
                         numericList.Add(Convert.ToInt64(arg));
-                        //else
-                        //    Console.WriteLine("Error converting expected number: " + arg);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Exception converting expected number: " + arg + " Exception: " + ex.ToString());
                     }
                 }
-                if (FindAlpha(arg))
+                //if (FindAlpha(arg))
+                if (System.Text.RegularExpressions.Regex.IsMatch(arg, WordRegex))
                 {
-                    wordsList.Add(arg);
+                    wordsList.Add(arg.Replace(".","").Replace(",",""));
                 }
             }
 
@@ -207,17 +196,5 @@ namespace TestApp
             return true;
         }
 
-        // ensure all characters in the string are alpha
-        private bool FindAlpha(string str)
-        {
-            foreach(char c in str)
-            {
-                if (c < 'a' || c > 'z' || c < 'A' || c > 'Z')
-                    if (c != ' ')
-                        return false;
-            }
-
-            return true;
-        }
     }
 }
