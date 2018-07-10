@@ -108,7 +108,9 @@ namespace TestApp
                 Console.WriteLine("----------------------------");
                 foreach(long phoneNumber in phoneList)
                 {
-                    Console.WriteLine(phoneNumber.ToString());
+                    string phStr = phoneNumber.ToString();
+                    string formattedPhone = "(" + phStr.Substring(0, 3) + ") " + phStr.Substring(3, 3) + "-" + phStr.Substring(6, 4);
+                    Console.WriteLine(formattedPhone);
                 }
             }
             if(numericList.Count > 0)
